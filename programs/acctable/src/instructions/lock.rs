@@ -2,7 +2,7 @@ use crate::state::LockState;
 use anchor_lang::prelude::*;
 use anchor_lang::system_program::{transfer, Transfer};
 
-pub fn lock(ctx: Context<Lock>, amt: u64) -> Result<()> {
+pub fn lock_handler(ctx: Context<Lock>, amt: u64) -> Result<()> {
     let payer = &ctx.accounts.payer;
     let lock = &mut ctx.accounts.lock;
     let program_id = &ctx.accounts.system_program;
