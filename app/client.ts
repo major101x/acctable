@@ -58,6 +58,13 @@ export class AnchorClient {
     return tx;
   }
 
+  async markComplete(): Promise<string> {
+    return this.program.methods
+      .markComplete()
+      .accounts({ payer: this.payer.publicKey })
+      .rpc();
+  }
+
   async unlock(): Promise<string> {
     // Note: requires lock.is_completed == true on-chain. Currently no on-chain
     // instruction exists to flip is_completed — this is a future program upgrade.

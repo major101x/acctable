@@ -44,6 +44,12 @@ async function main() {
       break;
     }
 
+    case "complete": {
+      const sig = await client.markComplete();
+      console.log(`Marked complete — tx: ${sig}`);
+      break;
+    }
+
     case "status": {
       const state = await client.fetchLockState();
       if (!state) {
@@ -59,6 +65,7 @@ async function main() {
     default:
       console.error("Commands:");
       console.error("  lock <sol>   — lock SOL into the program vault");
+      console.error("  complete     — mark your tasks as done");
       console.error("  unlock       — reclaim SOL once tasks are complete");
       console.error("  status       — view current lock state");
       process.exit(1);
