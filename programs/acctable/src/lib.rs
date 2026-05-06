@@ -26,6 +26,11 @@ pub mod acctable {
         instructions::unlock::unlock_handler(ctx)?;
         Ok(())
     }
+
+    pub fn mark_complete(ctx: Context<MarkComplete>) -> Result<()> {
+        instructions::mark_complete::mark_handler(ctx)?;
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
