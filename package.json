@@ -3,10 +3,12 @@
   "type": "module",
   "scripts": {
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
-    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
+    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
+    "client": "node --loader ts-node/esm app/index.ts"
   },
   "dependencies": {
-    "@coral-xyz/anchor": "^0.32.1"
+    "@coral-xyz/anchor": "^0.32.1",
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@types/bn.js": "^5.1.0",
