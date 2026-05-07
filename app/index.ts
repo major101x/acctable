@@ -3,6 +3,7 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import { AnchorClient } from "./client.js";
+import "dotenv/config";
 
 function loadKeypair(keypairPath?: string): Keypair {
   const resolved = keypairPath ?? path.join(os.homedir(), ".config/solana/id.json");
