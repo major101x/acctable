@@ -5,24 +5,21 @@ import type { Acctable } from "../target/types/acctable.js";
 
 export const PROGRAM_ID = new PublicKey("9U2SnYkHeWhQHsteHZBGb2W776MrahyWXTuvZhQoQwbi");
 
-// Developer's treasury — receives 3% fee on every lock. Set via FEE_RECEIVER env var.
-export const FEE_RECEIVER = new PublicKey(
-  process.env.FEE_RECEIVER ?? "11111111111111111111111111111111"
-);
-
 export type LockState = { amt: BN; isCompleted: boolean };
 
 export class AnchorClient {
   program: Program<Acctable>;
   payer: Keypair;
+  feeReceiver: PublicKey;
 
-  constructor(connection: Connection, payer: Keypair) {
+  constructor(connection: Connection, payer: Keypair, feeReceiver: PublicKey) {
     const provider = new AnchorProvider(connection, new Wallet(payer), {
       commitment: "confirmed",
     });
     setProvider(provider);
     this.program = new Program(idl as Acctable, provider);
     this.payer = payer;
+    this.feeReceiver = feeReceiver;
   }
 
   lockPda(): PublicKey {
@@ -52,7 +49,7 @@ export class AnchorClient {
     const tx = this.program.methods.lock(new BN(amtLamports))
     .accounts({
       payer: this.payer.publicKey,
-      feeReceiver: FEE_RECEIVER,
+      feeReceiver: this.feeReceiver,
     }).rpc()
 
     return tx;

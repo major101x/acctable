@@ -1,4 +1,4 @@
-import { Connection, Keypair, LAMPORTS_PER_SOL, clusterApiUrl } from "@solana/web3.js";
+import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import fs from "fs";
 import os from "os";
 import path from "path";
@@ -16,7 +16,9 @@ async function main() {
   const cluster = (process.env.CLUSTER ?? "devnet") as "devnet" | "mainnet-beta";
   const connection = new Connection(clusterApiUrl(cluster), "confirmed");
   const payer = loadKeypair(process.env.KEYPAIR_PATH);
-  const client = new AnchorClient(connection, payer);
+  if (!process.env.FEE_RECEIVER) throw new Error("FEE_RECEIVER env var not set");
+  const feeReceiver = new PublicKey(process.env.FEE_RECEIVER);
+  const client = new AnchorClient(connection, payer, feeReceiver);
 
   switch (cmd) {
     case "lock": {
