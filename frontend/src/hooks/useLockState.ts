@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import type { Program } from "@coral-xyz/anchor";
 import type { PublicKey } from "@solana/web3.js";
-import type { Acctable } from "@target/types/acctable";
+import type { Acctable } from "@/idl/acctable";
 import { fetchLockState, type LockState } from "@/lib/anchorClient";
 
 export function useLockState(

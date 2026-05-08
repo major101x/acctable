@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
-import idl from "@target/idl/acctable.json";
-import type { Acctable } from "@target/types/acctable";
+import idl from "@/idl/acctable.json";
+import type { Acctable } from "@/idl/acctable";
 
 export function useAnchorProgram(): Program<Acctable> | null {
   const { connection } = useConnection();

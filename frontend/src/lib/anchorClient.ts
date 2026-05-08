@@ -1,6 +1,6 @@
 import { BN, type Program } from "@coral-xyz/anchor";
 import { PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import type { Acctable } from "@target/types/acctable";
+import type { Acctable } from "@/idl/acctable";
 import { PROGRAM_ID, FEE_RECEIVER } from "./constants";
 
 export type LockState = { amt: BN; isCompleted: boolean };
