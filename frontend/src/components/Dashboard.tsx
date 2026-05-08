@@ -15,6 +15,7 @@ export function Dashboard() {
     "lock" | "markComplete" | "unlock" | null
   >(null);
   const [txError, setTxError] = useState<string | null>(null);
+  const [unlockSuccess, setUnlockSuccess] = useState(false);
 
   // Derive base state from on-chain data — useMemo avoids useEffect+setState cascade
   const baseState = useMemo((): DashboardState => {
@@ -47,6 +48,7 @@ export function Dashboard() {
           break;
         case "unlock":
           await client.unlock(program, publicKey);
+          setUnlockSuccess(true);
           break;
       }
     } catch (error) {
@@ -55,6 +57,32 @@ export function Dashboard() {
       await refetch();
       setSubmitting(null);
     }
+  }
+
+  if (unlockSuccess) {
+    return (
+      <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center p-4">
+        <div className="w-full max-w-sm space-y-6 text-center">
+          <div className="flex justify-center">
+            <div className="h-16 w-16 rounded-full bg-green-900 flex items-center justify-center">
+              <svg className="h-8 w-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">SOL Unlocked!</h2>
+            <p className="text-gray-400 mt-2 text-sm">Your funds are back in your wallet.</p>
+          </div>
+          <button
+            onClick={() => setUnlockSuccess(false)}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+          >
+            Lock again
+          </button>
+        </div>
+      </div>
+    );
   }
 
   if (lockState === "loading") {
